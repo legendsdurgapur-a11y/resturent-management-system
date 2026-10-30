@@ -1,0 +1,98 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.stat-card:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-tables {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-brand-primary);
+}
+
+.icon-available {
+  background-color: var(--status-available-bg);
+  color: var(--status-available);
+}
+
+.icon-occupied {
+  background-color: var(--status-occupied-bg);
+  color: var(--status-occupied);
+}
+
+.icon-reserved {
+  background-color: var(--status-reserved-bg);
+  color: var(--status-reserved);
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.stat-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stat-value {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  line-height: 1.1;
+}
+
+.stat-subtext {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.text-available {
+  color: var(--status-available);
+}
+
+.text-occupied {
+  color: var(--status-occupied);
+}
+
+.text-reserved {
+  color: var(--status-reserved);
+}

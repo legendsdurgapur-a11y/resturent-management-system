@@ -1,0 +1,88 @@
+<div class="table-card" [ngClass]="table.status.toLowerCase()">
+  <!-- Top Atmosphere Photo Header -->
+  <div class="card-photo-header">
+    <img
+      [src]="getSectionImage(table.section)"
+      [alt]="table.section"
+      class="section-photo"
+      loading="lazy"
+    />
+    <div class="photo-overlay"></div>
+    <div class="photo-top-bar">
+      <span class="section-tag">{{ table.section }}</span>
+      <span class="badge" [ngClass]="'badge-' + table.status.toLowerCase()">
+        <span class="badge-dot"></span>
+        {{ table.status }}
+      </span>
+    </div>
+    <div class="photo-bottom-bar">
+      <h4 class="table-name">{{ table.name }}</h4>
+      <span class="seats-pill">{{ table.capacity }} Seats</span>
+    </div>
+  </div>
+
+  <!-- Body Content -->
+  <div class="card-body">
+    <!-- Visual Table Shape Geometry with animated hover -->
+    <div class="table-visual" [ngClass]="table.shape">
+      <div class="table-shape-inner">
+        <svg class="table-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        <span class="shape-label">{{ table.shape === 'round' ? 'Round Table' : 'Rectangular Table' }}</span>
+      </div>
+    </div>
+
+    <!-- Guest Information Box -->
+    <div class="guest-details">
+      @if (table.status === 'Occupied') {
+        <div class="guest-row">
+          <span class="guest-avatar">👤</span>
+          <div>
+            <div class="guest-name">{{ table.currentGuest || 'Seated Guest' }}</div>
+            <div class="sub-text">🕒 Seated at {{ table.seatedAt || 'Recently' }}</div>
+          </div>
+        </div>
+      } @else if (table.status === 'Reserved') {
+        <div class="guest-row">
+          <span class="guest-avatar guest-avatar-reserved">📅</span>
+          <div>
+            <div class="guest-name">{{ table.currentGuest || 'Reserved Guest' }}</div>
+            <div class="sub-text">⏳ Awaiting party arrival</div>
+          </div>
+        </div>
+      } @else {
+        <div class="ready-row">
+          <span class="ready-icon">✨</span>
+          <div>
+            <div class="ready-text">Available for Seating</div>
+            <div class="sub-text">Fits parties up to {{ table.capacity }} guests</div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Action Buttons with Smooth Interactions -->
+    <div class="card-actions">
+      @if (table.status === 'Available') {
+        <button type="button" class="btn btn-primary" (click)="onQuickSeatWalkIn()">
+          <span>🚶 Seat Walk-In</span>
+        </button>
+      } @else if (table.status === 'Reserved') {
+        <button type="button" class="btn btn-primary" (click)="onSeatParty()">
+          <span>✓ Seat Party</span>
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="onVacate()">
+          <span>Clear</span>
+        </button>
+      } @else {
+        <button type="button" class="btn btn-danger" (click)="onVacate()">
+          <span>Vacate Table</span>
+        </button>
+      }
+    </div>
+  </div>
+</div>

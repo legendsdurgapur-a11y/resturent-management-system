@@ -1,0 +1,183 @@
+<div class="form-container">
+  <div class="form-header">
+    <div>
+      <div class="header-pretitle">BistroFlow Reservations</div>
+      <h2 class="title">Reserve Your Dining Experience</h2>
+      <p class="subtitle">Real-time table assignment with reactive validations &amp; instant confirmation</p>
+    </div>
+    <a routerLink="/tables" class="btn btn-secondary">← Back to Floor Plan</a>
+  </div>
+
+  <!-- Success message -->
+  @if (successMessage()) {
+    <div class="alert alert-success">
+      <span class="success-icon">🎉</span>
+      <div>
+        <strong>Booking Confirmed!</strong>
+        <p>{{ successMessage() }}</p>
+      </div>
+    </div>
+  }
+
+  <div class="booking-layout">
+    <!-- Left Column: Culinary Ambiance Photo Hero Card -->
+    <div class="ambiance-card">
+      <img
+        src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"
+        alt="BistroFlow Culinary Experience"
+        class="ambiance-img"
+        loading="lazy"
+      />
+      <div class="ambiance-overlay"></div>
+      <div class="ambiance-content">
+        <span class="ambiance-tag">✨ Michelin-Inspired Dining</span>
+        <h3 class="ambiance-title">Exceptional Food, Unforgettable Atmosphere</h3>
+        <p class="ambiance-desc">
+          Whether you prefer our candlelit indoor hall, open-air garden patio, or private VIP booth, our team crafts every dining moment to perfection.
+        </p>
+
+        <div class="ambiance-perks">
+          <div class="perk-item">
+            <span class="perk-icon">🍷</span>
+            <div>
+              <strong>Sommelier Pairing</strong>
+              <small>Complimentary for VIP bookings</small>
+            </div>
+          </div>
+          <div class="perk-item">
+            <span class="perk-icon">⚡</span>
+            <div>
+              <strong>Instant Seating</strong>
+              <small>Zero wait time upon arrival</small>
+            </div>
+          </div>
+          <div class="perk-item">
+            <span class="perk-icon">🌿</span>
+            <div>
+              <strong>Dietary Care</strong>
+              <small>Gluten-free &amp; vegan menus</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Interactive Booking Form -->
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="form-card">
+      <div class="form-grid">
+
+        <!-- Guest Name -->
+        <div class="field-group">
+          <label>Primary Guest Name *</label>
+          <input type="text" formControlName="guestName" placeholder="e.g. Eleanor Vance" class="input" />
+          @if (bookingForm.get('guestName')?.touched && bookingForm.get('guestName')?.invalid) {
+            <span class="error">Name is required (at least 2 characters).</span>
+          }
+        </div>
+
+        <!-- Phone -->
+        <div class="field-group">
+          <label>Contact Phone *</label>
+          <input type="tel" formControlName="phone" placeholder="e.g. +1 555-0199" class="input" />
+          @if (bookingForm.get('phone')?.touched && bookingForm.get('phone')?.invalid) {
+            <span class="error">Phone number is required.</span>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="field-group">
+          <label>Email Address</label>
+          <input type="email" formControlName="email" placeholder="e.g. guest@example.com" class="input" />
+          @if (bookingForm.get('email')?.touched && bookingForm.get('email')?.invalid) {
+            <span class="error">Enter a valid email address.</span>
+          }
+        </div>
+
+        <!-- Party Size -->
+        <div class="field-group">
+          <label>Party Size (Guests)</label>
+          <select formControlName="partySize" class="input">
+            <option [value]="1">1 Guest (Solo Dining)</option>
+            <option [value]="2">2 Guests (Couple)</option>
+            <option [value]="3">3 Guests</option>
+            <option [value]="4">4 Guests (Family / Friends)</option>
+            <option [value]="6">6 Guests (Large Party)</option>
+            <option [value]="8">8 Guests (Grand Banquet)</option>
+            <option [value]="10">10 Guests</option>
+            <option [value]="12">12 Guests</option>
+          </select>
+        </div>
+
+        <!-- Date -->
+        <div class="field-group">
+          <label>Reservation Date</label>
+          <input type="date" formControlName="date" class="input" />
+        </div>
+
+        <!-- Dining Section -->
+        <div class="field-group">
+          <label>Dining Section</label>
+          <select formControlName="section" class="input">
+            @for (s of sections; track s) {
+              <option [value]="s">{{ s }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Available Table Selection -->
+        <div class="field-group full">
+          <label>Choose Available Table *</label>
+          <select formControlName="tableId" class="input">
+            <option value="">— Select an available dining table —</option>
+            @for (t of availableTables(); track t.id) {
+              <option [value]="t.id">{{ t.name }} ({{ t.capacity }} seats · {{ t.section }})</option>
+            }
+          </select>
+          @if (availableTables().length === 0) {
+            <span class="hint">⚠️ No available tables found for this section &amp; party size. Please choose another section.</span>
+          }
+          @if (bookingForm.get('tableId')?.touched && bookingForm.get('tableId')?.invalid) {
+            <span class="error">Please select an available table.</span>
+          }
+        </div>
+
+        <!-- Special Notes -->
+        <div class="field-group full">
+          <label>Special Requests or Dietary Notes</label>
+          <input type="text" formControlName="notes" placeholder="e.g. Birthday celebration, allergic to shellfish, quiet booth..." class="input" />
+        </div>
+
+        <!-- Time Slot Buttons -->
+        <div class="field-group full">
+          <label>Preferred Seating Time Slot</label>
+          <div class="slots-row">
+            @for (slot of timeSlots; track slot) {
+              <button
+                type="button"
+                class="slot-btn"
+                [class.active]="bookingForm.get('timeSlot')?.value === slot"
+                (click)="bookingForm.get('timeSlot')?.setValue(slot)"
+              >
+                {{ slot }}
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="bookingForm.invalid || submitting()"
+        >
+          @if (submitting()) {
+            <span class="btn-spinner"></span> Confirming...
+          } @else {
+            <span>✨ Complete Table Reservation</span>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

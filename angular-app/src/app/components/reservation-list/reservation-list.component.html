@@ -1,0 +1,145 @@
+<div class="reservation-view">
+  <div class="header">
+    <div>
+      <div class="header-pretitle">BistroFlow Front Desk</div>
+      <h2 class="title">Reservations Ledger</h2>
+      <p class="subtitle">Incoming bookings, guest arrivals, and real-time seating management</p>
+    </div>
+    <a routerLink="/book" class="btn btn-primary">
+      <span>✨ + Create New Reservation</span>
+    </a>
+  </div>
+
+  <!-- Error Banner -->
+  @if (error()) {
+    <div class="alert alert-error">{{ error() }}</div>
+  }
+
+  <!-- Search & Filter Bar -->
+  <div class="filter-bar">
+    <div class="search-input-wrapper">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search by guest name, phone, or reservation ID..."
+        [ngModel]="searchQuery()"
+        (ngModelChange)="searchQuery.set($event)"
+      />
+      @if (searchQuery()) {
+        <button type="button" class="search-clear" (click)="searchQuery.set('')">✕</button>
+      }
+    </div>
+
+    <div class="pill-group">
+      @for (tab of statusTabs; track tab) {
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="selectedStatus() === tab"
+          (click)="selectedStatus.set(tab)"
+        >
+          {{ tab }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  @if (loading()) {
+    <div class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
+  } @else {
+    <!-- Dynamic Data Table -->
+    <div class="table-card">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Primary Guest</th>
+            <th>Date &amp; Time</th>
+            <th>Party Size</th>
+            <th>Table Assignment</th>
+            <th>Dining Zone</th>
+            <th>Status</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (res of filteredReservations(); track res.id) {
+            <tr class="res-row">
+              <td>
+                <div class="guest-cell">
+                  <div class="guest-avatar" [ngClass]="'avatar-' + res.status.toLowerCase()">
+                    {{ res.guestName.charAt(0).toUpperCase() }}
+                  </div>
+                  <div>
+                    <div class="guest-name">{{ res.guestName }}</div>
+                    <div class="guest-phone">📞 {{ res.phone }}</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="date-cell">
+                  <div class="date-primary">📅 {{ res.date }}</div>
+                  <div class="sub-time">⏰ {{ res.timeSlot }}</div>
+                </div>
+              </td>
+              <td>
+                <span class="party-badge">👥 {{ res.partySize }} Guests</span>
+              </td>
+              <td>
+                <span class="table-tag">🍽️ {{ getTableName(res.tableId) }}</span>
+              </td>
+              <td>
+                <span class="section-text">{{ res.section }}</span>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="'badge-' + res.status.toLowerCase()">
+                  <span class="badge-dot"></span>
+                  {{ res.status }}
+                </span>
+              </td>
+              <td class="actions-cell text-right">
+                @if (res.status === 'Confirmed') {
+                  <button type="button" class="btn btn-sm btn-primary"
+                    (click)="onSeat(res.id, res.tableId, res.guestName)"
+                    title="Seat this party now">
+                    ✓ Seat
+                  </button>
+                  <button type="button" class="btn btn-sm btn-danger"
+                    (click)="onCancel(res.id, res.tableId)"
+                    title="Cancel reservation">
+                    ✕ Cancel
+                  </button>
+                } @else if (res.status === 'Seated') {
+                  <button type="button" class="btn btn-sm btn-success"
+                    (click)="onComplete(res.id, res.tableId)"
+                    title="Mark dining complete and free table">
+                    ✓ Complete
+                  </button>
+                  <button type="button" class="btn btn-sm btn-danger"
+                    (click)="onCancel(res.id, res.tableId)"
+                    title="Cancel seating">
+                    ✕ Cancel
+                  </button>
+                } @else {
+                  <span class="archived-text">{{ res.status }}</span>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="empty-row">
+                <div class="empty-state-mini">
+                  <span style="font-size: 2rem;">📋</span>
+                  <p>No reservations found matching your criteria.</p>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

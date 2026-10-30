@@ -1,0 +1,58 @@
+<div class="app-layout">
+  <!-- Navbar with Animated Badges & Glassmorphism -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <span class="logo-icon">🍽️</span>
+        <div>
+          <div class="logo">BistroFlow</div>
+          <div class="logo-sub">Restaurant Table &amp; Reservation System</div>
+        </div>
+        <div class="live-pill">
+          <span class="live-dot"></span>
+          <span>LIVE</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a routerLink="/tables" routerLinkActive="active" class="nav-item">
+          <span>Dining Floorplan</span>
+          @if (availableTables().length > 0) {
+            <span class="nav-badge nav-badge-green" title="Available Tables">{{ availableTables().length }}</span>
+          }
+        </a>
+
+        <a routerLink="/reservations" routerLinkActive="active" class="nav-item">
+          <span>Reservations</span>
+          @if (activeReservationsCount() > 0) {
+            <span class="nav-badge nav-badge-amber" title="Confirmed Bookings">{{ activeReservationsCount() }}</span>
+          }
+        </a>
+
+        <a routerLink="/book" routerLinkActive="active" class="nav-item nav-cta">
+          <span>✨ + Book Table</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Routed Content with View Transition -->
+  <main class="content-container">
+    <router-outlet />
+  </main>
+
+  <!-- Modern Hospitality Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <strong>BistroFlow Hospitality Suite</strong>
+        <span>&copy; {{ currentYear }} All rights reserved. Fine Dining Operations &amp; Table Dispatch.</span>
+      </div>
+      <div class="footer-tech-badges">
+        <span class="footer-badge">Angular 17 Signals</span>
+        <span class="footer-badge">Node.js + Express</span>
+        <span class="footer-badge">SQLite Database</span>
+      </div>
+    </div>
+  </footer>
+</div>

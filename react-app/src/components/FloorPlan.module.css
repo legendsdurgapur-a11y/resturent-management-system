@@ -1,0 +1,99 @@
+/* CSS Modules for Floor Plan Layout */
+.floorPlanRoot {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.controlsBar {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04);
+}
+
+.sectionTabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.sectionTab {
+  padding: 8px 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: #475569;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.sectionTab:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.sectionTabActive {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+.statusFilterGroup {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.statusFilterBtn {
+  padding: 6px 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #475569;
+  transition: all 0.15s ease;
+}
+
+.statusFilterBtn:hover {
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.statusFilterBtnActive {
+  background-color: #f1f5f9;
+  border-color: #0f172a;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.tablesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.emptyState {
+  background-color: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 48px 24px;
+  text-align: center;
+  color: #64748b;
+}
+
+.emptyTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 8px;
+}

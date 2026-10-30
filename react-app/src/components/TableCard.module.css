@@ -1,0 +1,153 @@
+/* CSS Module Demonstration for Component-Scoped Styling */
+.tableCard {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
+}
+
+.tableCard:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08);
+}
+
+.statusAvailable {
+  border-top: 4px solid #059669;
+}
+
+.statusReserved {
+  border-top: 4px solid #d97706;
+}
+
+.statusOccupied {
+  border-top: 4px solid #1e40af;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.tableName {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: block;
+}
+
+.sectionBadge {
+  font-size: 0.75rem;
+  color: #64748b;
+  display: block;
+  margin-top: 2px;
+}
+
+.visualRepresentation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0;
+  margin-bottom: 12px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+}
+
+.roundTable {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #94a3b8;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.rectTable {
+  width: 104px;
+  height: 60px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #94a3b8;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.guestInfoBox {
+  margin-bottom: 14px;
+  min-height: 44px;
+  padding: 8px 10px;
+  background-color: #f8fafc;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+}
+
+.guestName {
+  font-weight: 600;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.guestDetail {
+  color: #64748b;
+  font-size: 0.75rem;
+  margin-top: 2px;
+}
+
+.cardActions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.actionBtn {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #0f172a;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.actionBtn:hover {
+  background-color: #f1f5f9;
+}
+
+.actionBtnPrimary {
+  background-color: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+.actionBtnPrimary:hover {
+  background-color: #1e293b;
+}
+
+.actionBtnVacate {
+  background-color: #ffffff;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.actionBtnVacate:hover {
+  background-color: #fef2f2;
+}

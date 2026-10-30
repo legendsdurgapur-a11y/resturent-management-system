@@ -1,0 +1,146 @@
+<div class="floor-plan-container">
+  <!-- Header Bar -->
+  <div class="fp-header">
+    <div>
+      <div class="header-pretitle">BistroFlow Real-Time Hospitality</div>
+      <h2 class="title">Table Floorplan &amp; Dining Zones</h2>
+      <p class="subtitle">Live occupancy monitoring and table dispatch powered by Angular Signals &amp; REST API</p>
+    </div>
+    <div class="header-actions">
+      <button type="button" class="btn btn-secondary" (click)="onReset()">
+        <span class="btn-icon">↺</span> Reset Demo Data
+      </button>
+    </div>
+  </div>
+
+  <!-- Error Banner -->
+  @if (error()) {
+    <div class="alert alert-error">
+      ⚠️ {{ error() }}
+    </div>
+  }
+
+  <!-- Dining Section Atmosphere Showcase (Visual Photos with Click-to-Filter) -->
+  <div class="section-showcase-grid">
+    @for (zone of sectionShowcase; track zone.name) {
+      <div
+        class="showcase-card"
+        [class.selected]="selectedSection() === zone.name"
+        (click)="onSelectSection(zone.name)"
+        role="button"
+        tabindex="0"
+      >
+        <img [src]="zone.image" [alt]="zone.name" class="showcase-img" loading="lazy" />
+        <div class="showcase-overlay"></div>
+        <div class="showcase-content">
+          <div class="showcase-badge">{{ zone.badge }}</div>
+          <h3 class="showcase-title">{{ zone.name }}</h3>
+          <p class="showcase-tagline">{{ zone.tagline }}</p>
+          <div class="showcase-cta">
+            <span>{{ selectedSection() === zone.name ? '✓ Viewing' : 'Click to Filter' }}</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Live Operational Metrics Grid -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-top">
+        <span class="label">Total Tables</span>
+        <span class="metric-icon">🍽️</span>
+      </div>
+      <span class="value">{{ tables().length }}</span>
+      <span class="sub">Total capacity: <strong>{{ totalCapacity() }}</strong> seats</span>
+    </div>
+
+    <div class="metric-card metric-available">
+      <div class="metric-top">
+        <span class="label">Available Now</span>
+        <span class="metric-pulse-dot dot-green"></span>
+      </div>
+      <span class="value text-available">{{ availableTables().length }}</span>
+      <span class="sub">Ready for incoming guests</span>
+    </div>
+
+    <div class="metric-card metric-occupied">
+      <div class="metric-top">
+        <span class="label">Occupied</span>
+        <span class="metric-pulse-dot dot-blue"></span>
+      </div>
+      <span class="value text-occupied">{{ occupiedTables().length }}</span>
+      <span class="sub"><strong>{{ seatedGuestsCount() }}</strong> guests currently dining</span>
+    </div>
+
+    <div class="metric-card metric-reserved">
+      <div class="metric-top">
+        <span class="label">Reserved</span>
+        <span class="metric-pulse-dot dot-amber"></span>
+      </div>
+      <span class="value text-reserved">{{ reservedTables().length }}</span>
+      <span class="sub">Awaiting party arrival</span>
+    </div>
+  </div>
+
+  <!-- Filter Controls -->
+  <div class="controls-card">
+    <div class="filter-row">
+      <span class="filter-label">Section:</span>
+      <div class="button-group">
+        @for (sec of sections; track sec) {
+          <button
+            type="button"
+            class="pill-btn"
+            [class.active]="selectedSection() === sec"
+            (click)="selectedSection.set(sec)"
+          >
+            {{ sec }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <span class="filter-label">Status:</span>
+      <div class="button-group">
+        @for (st of statuses; track st) {
+          <button
+            type="button"
+            class="pill-btn"
+            [class.active]="selectedStatus() === st"
+            (click)="selectedStatus.set(st)"
+          >
+            {{ st }}
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Spinner while loading -->
+  @if (loading()) {
+    <div class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
+  } @else {
+    <!-- Tables Grid -->
+    <div class="tables-grid">
+      @for (t of filteredTables(); track t.id) {
+        <app-table-card
+          [table]="t"
+          (statusChange)="onStatusChange($event)"
+        />
+      } @empty {
+        <div class="empty-state">
+          <div class="empty-icon">🔍</div>
+          <h3>No tables match current filters</h3>
+          <p>Try switching the section or status filter to see other dining tables.</p>
+          <button type="button" class="btn btn-secondary" (click)="selectedSection.set('All'); selectedStatus.set('All')">
+            Reset Filters
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

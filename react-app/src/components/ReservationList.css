@@ -1,0 +1,135 @@
+/* Reservation List Styles */
+.reservations-root {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.search-filter-card {
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+}
+
+.search-input-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  flex: 1;
+  min-width: 260px;
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  color: var(--color-text-main);
+  font-size: 0.9375rem;
+}
+
+.filter-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.pill-btn {
+  padding: 6px 14px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background-color: #ffffff;
+  color: var(--color-text-muted);
+  transition: all 0.15s ease;
+}
+
+.pill-btn:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text-main);
+}
+
+.pill-btn-active {
+  background-color: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+  color: #ffffff;
+}
+
+/* Reservation Table Representation */
+.table-container {
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.res-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.res-table th {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-light);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.res-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.res-table tr:last-child td {
+  border-bottom: none;
+}
+
+.res-table tr:hover td {
+  background-color: #fbfcfe;
+}
+
+.guest-name-cell {
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.guest-contact-sub {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  margin-top: 2px;
+}
+
+.table-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: var(--color-bg-subtle);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.75rem;
+  border: 1px solid var(--color-border);
+}
+
+.action-btn-group {
+  display: flex;
+  gap: 6px;
+}
